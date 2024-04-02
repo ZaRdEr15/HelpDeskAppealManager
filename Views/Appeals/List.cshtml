@@ -1,0 +1,47 @@
+﻿@model AppealsViewModel
+
+<h1>
+    Help desk appeals list
+</h1>
+<br>
+
+<h3>Add appeal</h3>
+
+<form method="post" asp-action="Add">
+    <p>
+        Description: <input type="text" asp-for="Description" required />
+        Deadline: <input type="datetime-local" asp-for="DeadlineDate" required />
+        <input type="submit" value="Add" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Description</th>
+            <th>Entry date</th>
+            <th>Deadline</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(var i = 0; i < Model.Appeals.Count; i++)
+        {
+            <tr style=@Model.Appeals[i].Color>
+                <td>
+                    <form method="post" asp-action="Remove">
+                        <input type="hidden" name="appealId" value=@i />
+                        <button type="submit">Mark as done</button>
+                    </form>
+                </td>
+                <td>@Model.Appeals[i].Description</td>
+                <td>@Model.Appeals[i].EntryDate</td>
+                <td>@Model.Appeals[i].DeadlineDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.Appeals.Count == 0)
+{
+    <p>There are no appeals at the moment.</p>
+}
