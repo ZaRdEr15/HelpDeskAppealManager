@@ -21,11 +21,19 @@ namespace HelpDeskAppealManager.Controllers
             foreach(var appeal in appeals)
             {
                 // If the deadline is due or less than 1 hour left, color the text red
-                appeal.Color = (appeal.DeadlineDate - DateTime.Now).Hours < 1 ? "color:red" : "color:black";
+                var dtNow = DateTime.Now;
+                if (appeal.DeadlineDate < dtNow || (appeal.DeadlineDate - dtNow).TotalHours < 1.0)
+                {
+                    appeal.Color = "color:red";
+                }
+                else
+                {
+                    appeal.Color = "color:black";
+                }
             }
             AppealsViewModel model = new AppealsViewModel();
             model.Appeals = appeals;
-            return View(model); 
+            return View(model);
         }
 
         [HttpPost]

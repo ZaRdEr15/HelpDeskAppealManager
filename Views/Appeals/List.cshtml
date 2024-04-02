@@ -10,7 +10,7 @@
 <form method="post" asp-action="Add">
     <p>
         Description: <input type="text" asp-for="Description" required />
-        Deadline: <input type="datetime-local" asp-for="DeadlineDate" required />
+        Deadline: <input type="datetime-local" value="DeadlineDate" asp-for="DeadlineDate" required />
         <input type="submit" value="Add" />
     </p>
 </form>
