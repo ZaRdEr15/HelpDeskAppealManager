@@ -4,7 +4,8 @@ namespace HelpDeskAppealManager.Models.Entities
 {
     public class Appeals : IAppeals
     {
-        private static List<Appeal> appeals = new List<Appeal>();
+        // Static to make it accessible and changeable throught the project run lifetime
+        private static List<Appeal> appeals = [];
         
         public List<Appeal> GetAppeals()
         { 
@@ -18,6 +19,8 @@ namespace HelpDeskAppealManager.Models.Entities
 
         public void SortDeadlineDateDescending()
         {
+            // Order deadline date by descending order using LINQ
+            // with sort and reassign in a single line
             appeals = [.. appeals.OrderByDescending(a => a.DeadlineDate)];
         }
 

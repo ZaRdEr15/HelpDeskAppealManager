@@ -31,8 +31,11 @@ namespace HelpDeskAppealManager.Controllers
                     appeal.Color = "color:black";
                 }
             }
-            AppealsViewModel model = new AppealsViewModel();
-            model.Appeals = appeals;
+
+            AppealsViewModel model = new()
+            {
+                Appeals = appeals
+            };
             return View(model);
         }
 
@@ -42,13 +45,14 @@ namespace HelpDeskAppealManager.Controllers
             var appeal = new Appeal
             {
                 Description = viewModel.Description,
-                EntryDate = DateTime.Now,
+                EntryDate = DateTime.Now, // Entry date is automatically created whenever the add method is called
                 DeadlineDate = viewModel.DeadlineDate,
                 Color = "color:black"
             };
 
             _appeals.AddAppeal(appeal);
 
+            // Sort always whenever adding a new appeal to ensure correct order
             _appeals.SortDeadlineDateDescending();
 
             return RedirectToAction("List");

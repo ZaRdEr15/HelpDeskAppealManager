@@ -6,7 +6,8 @@
 <br>
 
 <h3>Add appeal</h3>
-
+<br>
+<!--Form method HTTPPOST to add an appeal-->
 <form method="post" asp-action="Add">
     <p>
         Description: <input type="text" asp-for="Description" required />
@@ -14,34 +15,40 @@
         <input type="submit" value="Add" />
     </p>
 </form>
+<br>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Description</th>
-            <th>Entry date</th>
-            <th>Deadline</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for(var i = 0; i < Model.Appeals.Count; i++)
-        {
-            <tr style=@Model.Appeals[i].Color>
-                <td>
-                    <form method="post" asp-action="Remove">
-                        <input type="hidden" name="appealId" value=@i />
-                        <button type="submit">Mark as done</button>
-                    </form>
-                </td>
-                <td>@Model.Appeals[i].Description</td>
-                <td>@Model.Appeals[i].EntryDate</td>
-                <td>@Model.Appeals[i].DeadlineDate</td>
-            </tr>
-        }
-    </tbody>
-</table>
 @if (Model.Appeals.Count == 0)
 {
     <p>There are no appeals at the moment.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Description</th>
+                <th>Entry date</th>
+                <th>Deadline</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--For each appeal from the list create a POST form method to be able to remove appeals-->
+            <!--Also show description, entry and deadline dates and depending on the time show appropriate text color-->
+            @for (var i = 0; i < Model.Appeals.Count; i++)
+            {
+                <tr style=@Model.Appeals[i].Color>
+                    <td>
+                        <form method="post" asp-action="Remove">
+                            <input type="hidden" name="appealId" value=@i />
+                            <button type="submit">Mark as done</button>
+                        </form>
+                    </td>
+                    <td>@Model.Appeals[i].Description</td>
+                    <td>@Model.Appeals[i].EntryDate</td>
+                    <td>@Model.Appeals[i].DeadlineDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
